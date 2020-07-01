@@ -75,6 +75,22 @@ size_t kglib::cntFldToken(char *str, size_t maxRecLen,bool fmtErrSkip)
 	}
 	return fldCnt;
 }
+
+// ----------------------------------------------------------------------------
+// 行末を探す（DQ考慮しない）
+// 現在地から次の改行を見つける
+// 返値:改行の位置
+// ----------------------------------------------------------------------------
+char* kglib::skipRecNdq(char* str)
+{
+	char* border=str+KG_MaxRecLen;
+	for( ; str<border; str++){
+		if(*str=='\n') break;
+	}
+	if(str>=border) kgError::recLenErr();
+	return str;
+}
+
 // ----------------------------------------------------------------------------
 // 行分割（DQ考慮しない）
 // 現在地から次の改行を見つけて、\0に置換

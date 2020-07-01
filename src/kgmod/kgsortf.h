@@ -58,6 +58,7 @@ class kgSortf :public kgMod{
 	size_t   _maxlines;  //maxlines=
 	int      _blocks;    //blocks=
 	int      _threadCnt; // threadCnt=
+	int      _skipRows;  // skipRows=
 	kgstr_t  _nStr;      // n=
 	bool 		 _noflg;
   void setArgs(void); // 引数セット

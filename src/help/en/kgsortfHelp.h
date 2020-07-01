@@ -30,7 +30,7 @@ This commands uses quicksort algorithm and it is not a stable sort\n\
 \n\
 Format\n\
 \n\
-msortf f= [n=] [pways=] [maxlines=] [blocks=] [threadCnt=] [-noflg] [i=] [o=]\n\
+msortf f= [skipRows=] [n=] [pways=] [maxlines=] [blocks=] [threadCnt=] [-noflg] [i=] [o=]\n\
 [-assert_diffSize] [-nfn] [-nfno] [-x] [-q] [tmpPath=] [--help]\n\
 [--helpl] [--version]\n\
 \n\
@@ -41,6 +41,7 @@ Parameters\n\
        Specify %n after the field name, followed by n or r.\n\
        Character string ascending order:field name (% is not specified), character string descending order:f=field%r,\n\
        numeric ascending order:f=field%n, numeric descending order:f=field%nr.\n\
+  skipRows=   skip-rows [default value: 0]\n\
   n=   Specify the header line.\n\
 \n\
 Examples\n\

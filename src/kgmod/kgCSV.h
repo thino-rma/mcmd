@@ -102,6 +102,7 @@ protected:
 	size_t           dupSize_;     // スラック領域へコピーするサイズ
 	size_t           bufSize_;     // スラック領域へコピーするサイズ
 	char*            curPnt_;      // 現在の読み込みポインタ
+	size_t           skipRows_;    // スキップする行数
 
 	// 項目名関連
 	bool             noFldName_;   // １行目が項目名行でないフラグ
@@ -118,7 +119,7 @@ protected:
 
 	void setSortInfo(const kgstr_t& fileName);
 
-	void initialSet(const kgstr_t& fileName, kgEnv* env, bool noFldName,size_t cnt=4)throw(kgError);
+	void initialSet(const kgstr_t& fileName, kgEnv* env, bool noFldName,size_t cnt=4, size_t skipRows=0)throw(kgError);
 
 public:
 	// コンストラクタ,デストラクタ
@@ -126,8 +127,8 @@ public:
 	virtual ~kgCSV(void){close();};
 
 	// ファイル操作
-	void open(const kgstr_t& fname, kgEnv* env, bool noFldName, size_t readCnt=4) throw(kgError);
-	void popen(int fd, kgEnv* env, bool noFldName, size_t readCnt=4) throw(kgError);
+	void open(const kgstr_t& fname, kgEnv* env, bool noFldName, size_t readCnt=4, size_t skipRows=0) throw(kgError);
+	void popen(int fd, kgEnv* env, bool noFldName, size_t readCnt=4, size_t skipRows=0) throw(kgError);
 	void clear(void);
 
 	virtual int read(void)=0;

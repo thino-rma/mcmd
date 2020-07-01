@@ -44,6 +44,7 @@ bool hasMchr(char *fld, char chr);
 void rmEol(char* rec, int recLen);
 
 size_t cntFldToken(char *str, size_t maxRecLen,bool fmtErrSkip=false);
+char* skipRecNdq(char* str);
 char* sepRecTokenNdq(char* str);
 char* sepRecToken(char *str, size_t maxRecLen); 
 

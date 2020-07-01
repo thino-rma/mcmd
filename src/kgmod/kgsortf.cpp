@@ -194,7 +194,7 @@ kgSortf::kgSortf(void)
 void kgSortf::setArgs(void)
 {
 	// パラメータチェック
-	_args.paramcheck("f=,i=,o=,pways=,maxlines=,blocks=,threadCnt=,-noflg,n=",kgArgs::COMMON|kgArgs::IODIFF);
+	_args.paramcheck("f=,i=,o=,pways=,maxlines=,blocks=,threadCnt=,-noflg,skipRows=,n=",kgArgs::COMMON|kgArgs::IODIFF);
 	// n=header
 	_nStr = _args.toString("n=",false);
 	if (! _nStr.empty() ) {
@@ -211,8 +211,17 @@ void kgSortf::setArgs(void)
 		kgError err("invalid blocks: must be in range [1,1000]");
 		errorEnd(err);
 	}
+
+	// skipRows=count
+	s= _args.toString("skipRows=",false);
+	if(s.empty()) _skipRows=0;
+	else          _skipRows=atoi(s.c_str());
+	if(_skipRows < 0) {
+		kgError err("invalid skip-rows: must be >=0");
+		errorEnd(err);
+	}
 	// 入出力ファイルオープン
-	_iFile.open(_args.toString("i=",false), _env, _nfn_i, _blocks);
+	_iFile.open(_args.toString("i=",false), _env, _nfn_i, _blocks, _skipRows);
 	_oFile.open(_args.toString("o=",false), _env, _nfn_o,_rp);
 	_iFile.read_header();
 

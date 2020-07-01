@@ -32,7 +32,7 @@ f=パラメータで指定した項目を基準にして、レコードを並べ
 \n\
 書式\n\
 \n\
-msortf f= [n=] [pways=] [maxlines=] [blocks=] [threadCnt=] [-noflg] [i=] [o=]\n\
+msortf f= [skipRows=] [n=] [pways=] [maxlines=] [blocks=] [threadCnt=] [-noflg] [i=] [o=]\n\
 [-assert_diffSize] [-nfn] [-nfno] [-x] [-q] [tmpPath=] [--help]\n\
 [--helpl] [--version]\n\
 \n\
@@ -42,6 +42,7 @@ msortf f= [n=] [pways=] [maxlines=] [blocks=] [threadCnt=] [-noflg] [i=] [o=]\n\
                並び順は、数値/文字列、昇順/降順の組み合せで4通り指定できる。\n\
                指定方法は%に続けてnとrを以下の通り組み合わせる。\n\
                文字列昇順:項目名(%指定なし)、文字列逆順:f=項目名%r、数値昇順:f=項目名%n、数値降順:f=項目名%nr。\n\
+  skipRows=    入力CSVのスキップする行数を指定する。【デフォルト値:0】\n\
   n=           出力CSVのヘッダー行を指定する。\n\
   -noflg       出力CSVのヘッダーにソーティングの印(%0,%0nなど)を付けない。\n\
   pways=       同時併合ファイル数([2-100]:デフォルト32)【任意】\n\

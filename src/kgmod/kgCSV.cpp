@@ -111,7 +111,7 @@ void kgCSV::readCSVfile() throw(kgError)
 	*(buf_+dupSize_+accSize) = '\0';
 }
 
-void kgCSV::initialSet(const kgstr_t& fileName, kgEnv* env, bool noFldName,size_t cnt)throw(kgError) {
+void kgCSV::initialSet(const kgstr_t& fileName, kgEnv* env, bool noFldName,size_t cnt, size_t skipRows)throw(kgError) {
 	// 初期値セット
 	noFldName_   = noFldName;
 	buf_         = 0;
@@ -137,12 +137,13 @@ void kgCSV::initialSet(const kgstr_t& fileName, kgEnv* env, bool noFldName,size_
 		throw kgError("internal error: invalid queue count");
 	}
   ioCnt_   = queSize_ / ioSize_;
+	skipRows_ = skipRows;
 
 }
 
-void kgCSV::popen(int fd, kgEnv* env, bool noFldName,size_t cnt) throw(kgError) 
+void kgCSV::popen(int fd, kgEnv* env, bool noFldName,size_t cnt, size_t skipRows) throw(kgError)
 {
-	initialSet("",env, noFldName,cnt);
+	initialSet("",env, noFldName,cnt, skipRows);
 
 	// オープン処理
 	try {
@@ -161,9 +162,9 @@ void kgCSV::popen(int fd, kgEnv* env, bool noFldName,size_t cnt) throw(kgError)
 // ioSize_ : read関数で一回に読込むサイズ
 // ioCnt_ : 一回のkgIFP::readでread関数を何回呼ぶか(= queSize_/ioSize_)
 // ----------------------------------------------------------------------------
-void kgCSV::open(const kgstr_t& fileName, kgEnv* env, bool noFldName,size_t cnt) throw(kgError) 
+void kgCSV::open(const kgstr_t& fileName, kgEnv* env, bool noFldName,size_t cnt, size_t skipRows) throw(kgError)
 {
-	initialSet(fileName,env, noFldName,cnt);
+	initialSet(fileName,env, noFldName,cnt,skipRows);
 
 	// オープン処理
 	try {
@@ -262,7 +263,7 @@ bool kgCSV::sortFldchk(vector<kgstr_t>& fld ,bool fldbynum)
 //------------------------------------------------------------------------------
 // バッファの確保＆項目行の読み込み
 //------------------------------------------------------------------------------
-void kgCSV::set_fields(size_t dupSize) 
+void kgCSV::set_fields(size_t dupSize)
 {
 	//バッファ確保
 	dupSize_ = dupSize;
@@ -282,6 +283,9 @@ void kgCSV::set_fields(size_t dupSize)
 	dupTop_ = buf_ + bufSize_ - dupSize_;
 	curPnt_ = buf_+bufSize_;
 	readCSVfile();
+
+	// スキップする行数が指定された場合、読み飛ばす
+        for(int i=0; i<skipRows_ && !isEOF(); ++i) curPnt_ = kglib::skipRecNdq(curPnt_) + 1;
 
 	// いきなりのeofの検知:
 	// -nfnで0バイトファイルの場合はなにもせずreturn
