@@ -1,3 +1,28 @@
+# Works after fork
+This repogitory is forked from [nysol/mcmd master](https://github.com/nysol/mcmd/commits/master) at Commit [add func check](https://github.com/nysol/mcmd/commit/5058b997de6d07156577100a929299d9aa77f8ee)
+* [msortf add n=](https://github.com/thino-rma/mcmd/commit/b0a0ba9c9ae06fcc3ea2f46eaa19d434f6c4db21)
+```sh
+## use n= option to add header
+$ msortf f=Category1 n=ID,NAME i=./tutorial_en/jicfs1.csv o=result.csv
+$ msortf -x f=1      n=ID,NAME i=./tutorial_en/jicfs1.csv o=result.csv
+$ tail -n +2 ./tutorial_en/jicfs1.csv | msortf -nfn f=1 n=ID,NAME o=result.csv
+```
+* [msortf add skipRows=](https://github.com/thino-rma/mcmd/commit/57ab6893cd4e6b6cfcd2408b0846c21d7042aa95)
+```sh
+## if you want to remove header line, use -nfno option
+$ msortf f=Category1 -nfno i=./tutorial_en/jicfs1.csv o=result.csv
+$ msortf -x f=1      -nfno i=./tutorial_en/jicfs1.csv o=result.csv
+## if you want to skip rows, use skipRows= option
+$ msortf skipRows=3 f=Category1           i=data.csv o=result.csv
+$ msortf skipRows=3 f=Category1 n=ID,NAME i=data.csv o=result.csv
+$ msortf skipRows=3 -x f=1                i=data.csv o=result.csv
+$ msortf skipRows=3 -x f=1      n=ID,NAME i=data.csv o=result.csv
+$ msortf skipRows=4 -nfn f=1              i=data.csv o=result.csv
+$ msortf skipRows=4 -nfn f=1    n=ID,NAME i=data.csv o=result.csv
+```
+
+---
+
 # MCMD (M-Command): a set of commands for handling large scale CSV data
 [[in japanese]](https://github.com/nysol/mcmd/wiki)
 
