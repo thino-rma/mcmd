@@ -194,7 +194,12 @@ kgSortf::kgSortf(void)
 void kgSortf::setArgs(void)
 {
 	// パラメータチェック
-	_args.paramcheck("f=,i=,o=,pways=,maxlines=,blocks=,threadCnt=,-noflg",kgArgs::COMMON|kgArgs::IODIFF);
+	_args.paramcheck("f=,i=,o=,pways=,maxlines=,blocks=,threadCnt=,-noflg,n=",kgArgs::COMMON|kgArgs::IODIFF);
+	// n=header
+	_nStr = _args.toString("n=",false);
+	if (! _nStr.empty() ) {
+		_nfn_o = true;
+	}
 	// 
 	_noflg =_args.toBool("-noflg");
 
@@ -758,6 +763,17 @@ int kgSortf::run(void) try
 	int iCnt=sort(_iFile);
 
 	// 入力件数0の時は例外的に項目名のみ出力して終了
+if (! _nStr.empty() ){
+	_oFile.writeStrNdq(_nStr.c_str(), true); // write header
+	if(iCnt==0){
+		_oFile.close();
+	}else{
+		// マージ
+		for(int level=0; iCnt!=0 ;level++){
+			iCnt=mergeOneLevel(level, iCnt);
+		}
+	}
+} else {
 	if(iCnt==0){
 		if(_noflg) { _oFile.writeFldName(_iFile); }
 		else			 { _oFile.writeFldName(_fField,kgstr_t("%")); }
@@ -768,6 +784,7 @@ int kgSortf::run(void) try
 			iCnt=mergeOneLevel(level, iCnt);
 		}
 	}
+}
 
 	// 終了処理
 	_iFile.close();
